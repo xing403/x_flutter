@@ -7,7 +7,7 @@ enum XButtonSize { small, medium, large } // 按钮大小
 
 enum XButtonType { primary, danger, warning, success, info } // 按钮类型
 
-enum XButtonShape { square, round, circle, radius } // 按钮形状
+enum XButtonShape { square, round, radius } // 按钮形状
 
 enum XButtonStatus { defaultState, active, disable }
 
@@ -30,36 +30,78 @@ class XButton extends StatefulWidget {
     this.shape = XButtonShape.radius,
     this.loading = false,
     this.disabled = false,
+    this.fill = false,
+    this.plain = false,
     this.onTap,
     this.onDoubleTap,
     this.onLongPress,
-    this.onDoubleTapDown,
     this.onTapDown,
     this.onTapUp,
   });
 
-  final String? text; // 文本
-  final XButtonType type; // 类型
-  final XButtonSize size; // 大小
+  /// 文本
+  final String? text;
+
+  /// 类型
+  final XButtonType type;
+
+  /// 大小
+  final XButtonSize size;
+
+  /// 宽度
   final double? width;
+
+  /// 高度
   final double? height;
-  final bool loading; // 加载中
-  final bool disabled; // 禁用
+
+  /// 是否加载中
+  final bool loading;
+
+  /// 禁用状态
+  final bool disabled;
+
+  /// 占满元素宽度
+  final bool fill;
+
+  /// 镂空
+  final bool plain;
+
+  /// 样式
   final XButtonStyle? style;
+
+  /// 形状
   final XButtonShape? shape;
-  final IconData? icon; //  图标
-  final EdgeInsetsGeometry? padding; // 内边距
-  final EdgeInsetsGeometry? margin; // 外边距
 
-  final Widget? iconWidget; // 自定义图标icon控件
-  final Widget? child; // 子控件
+  /// 图标
+  final IconData? icon;
 
-  final XButtonEvent? onTap; // 点击事件
-  final XButtonEvent? onDoubleTap; // 双击事件
-  final XButtonEvent? onDoubleTapDown; // 双击按下事件
-  final XButtonEvent? onLongPress; // 长按事件
-  final XButtonEvent? onTapDown; // 按下事件
-  final XButtonEvent? onTapUp; // 抬起事件
+  /// 内边距
+  final EdgeInsetsGeometry? padding;
+
+  /// 外边距
+  final EdgeInsetsGeometry? margin;
+
+  /// 图标控件
+  final Widget? iconWidget;
+
+  /// 子控件
+  final Widget? child;
+
+  /// 点击事件
+  final XButtonEvent? onTap;
+
+  /// 双击事件
+  final XButtonEvent? onDoubleTap;
+
+  /// 长按事件
+  final XButtonEvent? onLongPress;
+
+  /// 按下事件
+  final XButtonEvent? onTapDown;
+
+  /// 抬起事件
+  final XButtonEvent? onTapUp;
+
   @override
   State<StatefulWidget> createState() => _XButtonState();
 }
@@ -129,19 +171,41 @@ class _XButtonState extends State<XButton> {
       onDoubleTap: () {
         if (!widget.disabled && widget.onDoubleTap != null) widget.onDoubleTap!();
       },
-      // onLongPress: () {
-      //   if (!widget.disabled && widget.onLongPress != null) widget.onLongPress!();
-      // },
-      onTapDown: (TapDownDetails details) {
+      onLongPress: () {
+        if (!widget.disabled && widget.onLongPress != null) widget.onLongPress!();
+      },
+      onLongPressDown: (details) {
         if (widget.disabled) return;
         setState(() {
           _status = XButtonStatus.active;
         });
       },
-      onTapUp: (TapUpDetails details) {
+      onLongPressEnd: (details) {
         if (widget.disabled) return;
 
-        Future.delayed(const Duration(milliseconds: 1000), () {
+        Future.delayed(const Duration(milliseconds: 100), () {
+          if (mounted) {
+            setState(() {
+              _status = XButtonStatus.defaultState;
+            });
+          }
+        });
+      },
+      onTapDown: (details) {
+        if (widget.disabled) return;
+
+        if (widget.onTapDown != null) widget.onTapDown!();
+
+        setState(() {
+          _status = XButtonStatus.active;
+        });
+      },
+      onTapUp: (details) {
+        if (widget.disabled) return;
+
+        if (widget.onTapUp != null) widget.onTapUp!();
+
+        Future.delayed(const Duration(milliseconds: 100), () {
           if (mounted) {
             setState(() {
               _status = XButtonStatus.defaultState;
@@ -157,7 +221,7 @@ class _XButtonState extends State<XButton> {
     if (widget.padding != null) {
       return widget.padding;
     }
-    var equalSide = widget.shape == XButtonShape.radius || widget.shape == XButtonShape.circle;
+    var equalSide = widget.shape == XButtonShape.radius;
 
     double horizontalPadding;
     double verticalPadding;
@@ -175,6 +239,7 @@ class _XButtonState extends State<XButton> {
         verticalPadding = equalSide ? 7 : 5;
         break;
     }
+
     if (style.borderWidth != null && style.borderWidth != 0) {
       horizontalPadding = horizontalPadding - style.borderWidth!;
       verticalPadding = verticalPadding - style.borderWidth!;
@@ -185,19 +250,29 @@ class _XButtonState extends State<XButton> {
         verticalPadding = 0;
       }
     }
-    return EdgeInsets.only(left: horizontalPadding, right: horizontalPadding, bottom: verticalPadding, top: verticalPadding);
+    return EdgeInsets.only(
+      left: horizontalPadding,
+      right: horizontalPadding,
+      bottom: verticalPadding,
+      top: verticalPadding,
+    );
   }
 
   EdgeInsetsGeometry? _getMargin() {
     if (widget.margin != null) {
       return widget.margin;
     }
-    return null;
+
+    return widget.fill ? const EdgeInsets.only(left: 16, right: 16) : null;
   }
 
   Widget? getIcon() {
     if (widget.loading) {
-      return const Icon(XIcon.loading);
+      return Icon(
+        XIcon.loading,
+        color: style.textColor,
+        size: 16,
+      );
     }
     if (widget.iconWidget != null) {
       return widget.iconWidget;
@@ -209,6 +284,7 @@ class _XButtonState extends State<XButton> {
           text: String.fromCharCode(widget.icon!.codePoint),
           style: TextStyle(
             inherit: false,
+            color: style.textColor,
             height: 1,
             fontSize: _iconSize,
             fontFamily: widget.icon!.fontFamily,
@@ -234,10 +310,11 @@ class _XButtonState extends State<XButton> {
     }
   }
 
-  double _getButtonWidth() {
-    if (widget.width != null) {
-      return widget.width!;
-    }
+  double? _getButtonWidth() {
+    if (widget.fill) return null;
+
+    if (widget.width != null) return widget.width!;
+
     switch (widget.size) {
       case XButtonSize.small:
         return 80;
@@ -312,7 +389,6 @@ class _XButtonState extends State<XButton> {
           case XButtonSize.small:
             return Radius.circular(XTheme.of(context).radiusSmall);
         }
-      case XButtonShape.circle:
       case XButtonShape.round:
         return Radius.circular(XTheme.of(context).radiusRound);
       case XButtonShape.square:
@@ -326,7 +402,7 @@ class _XButtonState extends State<XButton> {
       case XButtonStatus.defaultState:
       case XButtonStatus.active:
       case XButtonStatus.disable:
-        return XButtonStyle.generateStyle(context, widget.type, _status);
+        return XButtonStyle.generateStyle(context, widget.type, widget.plain, _status);
       default:
         return _style ?? _defaultStyle!;
     }
@@ -348,7 +424,7 @@ class _XButtonState extends State<XButton> {
   }
 
   XButtonStyle _generateStyle() {
-    return XButtonStyle.generateStyle(context, widget.type, _status);
+    return XButtonStyle.generateStyle(context, widget.type, widget.plain, _status);
   }
 
   XButtonStyle _generateDefaultStyle() {

@@ -14,7 +14,7 @@ class XButtonStyle {
 
   BorderRadiusGeometry? radius; // 自定义圆角
 
-  XButtonStyle.generateStyle(BuildContext context, XButtonType type, XButtonStatus status) {
+  XButtonStyle.generateStyle(BuildContext context, XButtonType type, bool plain, XButtonStatus status) {
     textColor = XTheme.of(context).fontWhColor1;
     switch (type) {
       case XButtonType.primary:
@@ -35,11 +35,16 @@ class XButtonStyle {
       default:
         backgroundColor = Colors.black.withOpacity(0.6);
     }
+
     borderWidth = 1;
     borderColor = backgroundColor;
+    if (plain) {
+      textColor = backgroundColor;
+      backgroundColor = Colors.transparent;
+    }
   }
   XButtonStyle.generateDefaultStyle(BuildContext context) {
-    XButtonStyle.generateStyle(context, XButtonType.primary, XButtonStatus.active);
+    XButtonStyle.generateStyle(context, XButtonType.primary, false, XButtonStatus.active);
   }
   Color _getBgPrimaryStyle(BuildContext context, XButtonStatus status) {
     switch (status) {

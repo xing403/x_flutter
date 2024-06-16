@@ -1,10 +1,10 @@
-// ignore_for_file: unused_element, constant_identifier_names
+// ignore_for_file: constant_identifier_names
 
 import 'package:flutter/widgets.dart';
 
 @immutable
 class _XIconData extends IconData {
-  const _XIconData(super.codePoint, this.name) : super(fontFamily: 'XIcon', fontPackage: 'x_flutter');
+  const _XIconData(super.codePoint, this.name) : super(fontFamily: 'XIcons', fontPackage: 'x_flutter');
 
   final String name;
 }

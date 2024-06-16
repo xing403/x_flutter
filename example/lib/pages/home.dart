@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'button/button_page.dart';
+import 'button/index.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
