@@ -15,89 +15,131 @@ class XButtonStyle {
   BorderRadiusGeometry? radius; // 自定义圆角
 
   XButtonStyle.generateStyle(BuildContext context, XButtonType type, bool plain, XButtonStatus status) {
-    textColor = XTheme.of(context).fontWhColor1;
+    bool isWhite = status == XButtonStatus.active || (plain == false && status == XButtonStatus.defaultState);
     switch (type) {
       case XButtonType.primary:
-        backgroundColor = _getBgPrimaryStyle(context, status);
+        textColor = XTheme.of(context).brandNormalColor;
+        backgroundColor = _getBgPrimaryStyle(context, plain, status);
         break;
       case XButtonType.danger:
-        backgroundColor = _getBgDangerStyle(context, status);
+        textColor = XTheme.of(context).errorNormalColor;
+        backgroundColor = _getBgDangerStyle(context, plain, status);
         break;
       case XButtonType.success:
-        backgroundColor = _getBgSuccessStyle(context, status);
+        textColor = XTheme.of(context).successNormalColor;
+        backgroundColor = _getBgSuccessStyle(context, plain, status);
         break;
       case XButtonType.warning:
-        backgroundColor = _getBgWarningStyle(context, status);
+        textColor = XTheme.of(context).warningNormalColor;
+        backgroundColor = _getBgWarningStyle(context, plain, status);
         break;
       case XButtonType.info:
-        backgroundColor = _getBgInfoStyle(context, status);
+        textColor = XTheme.of(context).grayColor6;
+        backgroundColor = _getBgInfoStyle(context, plain, status);
         break;
-      default:
-        backgroundColor = Colors.black.withOpacity(0.6);
     }
-
+    textColor = isWhite ? XTheme.of(context).baseWhiteColor : textColor;
     borderWidth = 1;
-    borderColor = backgroundColor;
-    if (plain) {
-      textColor = backgroundColor;
-      backgroundColor = Colors.transparent;
-    }
+    borderColor = _getBorderStyle(context, type, status);
   }
   XButtonStyle.generateDefaultStyle(BuildContext context) {
     XButtonStyle.generateStyle(context, XButtonType.primary, false, XButtonStatus.active);
   }
-  Color _getBgPrimaryStyle(BuildContext context, XButtonStatus status) {
-    switch (status) {
-      case XButtonStatus.defaultState:
-        return XTheme.of(context).brandColor7;
-      case XButtonStatus.active:
-        return XTheme.of(context).brandColor4;
-      case XButtonStatus.disable:
-        return XTheme.of(context).brandColor3;
+  Color _getBorderStyle(BuildContext context, XButtonType type, XButtonStatus status) {
+    if (status == XButtonStatus.active) {
+      switch (type) {
+        case XButtonType.primary:
+          return XTheme.of(context).brandClickColor;
+        case XButtonType.danger:
+          return XTheme.of(context).errorClickColor;
+        case XButtonType.warning:
+          return XTheme.of(context).warningClickColor;
+        case XButtonType.success:
+          return XTheme.of(context).successClickColor;
+        case XButtonType.info:
+          return XTheme.of(context).grayColor7;
+      }
+    } else if (status == XButtonStatus.defaultState) {
+      switch (type) {
+        case XButtonType.primary:
+          return XTheme.of(context).brandNormalColor;
+        case XButtonType.danger:
+          return XTheme.of(context).errorNormalColor;
+        case XButtonType.warning:
+          return XTheme.of(context).warningNormalColor;
+        case XButtonType.success:
+          return XTheme.of(context).successNormalColor;
+        case XButtonType.info:
+          return XTheme.of(context).grayColor6;
+      }
+    } else {
+      switch (type) {
+        case XButtonType.primary:
+          return XTheme.of(context).brandDisabledColor;
+        case XButtonType.danger:
+          return XTheme.of(context).errorDisabledColor;
+        case XButtonType.warning:
+          return XTheme.of(context).warningDisabledColor;
+        case XButtonType.success:
+          return XTheme.of(context).successDisabledColor;
+        case XButtonType.info:
+          return XTheme.of(context).grayColor4;
+      }
     }
   }
 
-  Color _getBgDangerStyle(BuildContext context, XButtonStatus status) {
+  Color _getBgPrimaryStyle(BuildContext context, bool plain, XButtonStatus status) {
     switch (status) {
       case XButtonStatus.defaultState:
-        return XTheme.of(context).errorColor7;
+        return plain ? XTheme.of(context).brandColor3 : XTheme.of(context).brandNormalColor;
       case XButtonStatus.active:
-        return XTheme.of(context).errorColor4;
+        return XTheme.of(context).brandClickColor;
       case XButtonStatus.disable:
-        return XTheme.of(context).errorColor3;
+        return plain ? XTheme.of(context).brandColor1 : XTheme.of(context).brandDisabledColor;
     }
   }
 
-  Color _getBgWarningStyle(BuildContext context, XButtonStatus status) {
+  Color _getBgDangerStyle(BuildContext context, bool plain, XButtonStatus status) {
     switch (status) {
       case XButtonStatus.defaultState:
-        return XTheme.of(context).warningColor7;
+        return plain ? XTheme.of(context).errorColor3 : XTheme.of(context).errorNormalColor;
       case XButtonStatus.active:
-        return XTheme.of(context).warningColor4;
+        return XTheme.of(context).errorClickColor;
       case XButtonStatus.disable:
-        return XTheme.of(context).warningColor3;
+        return plain ? XTheme.of(context).errorColor1 : XTheme.of(context).errorDisabledColor;
     }
   }
 
-  Color _getBgSuccessStyle(BuildContext context, XButtonStatus status) {
+  Color _getBgWarningStyle(BuildContext context, bool plain, XButtonStatus status) {
     switch (status) {
       case XButtonStatus.defaultState:
-        return XTheme.of(context).successColor7;
+        return plain ? XTheme.of(context).warningColor3 : XTheme.of(context).warningNormalColor;
       case XButtonStatus.active:
-        return XTheme.of(context).successColor4;
+        return XTheme.of(context).warningClickColor;
       case XButtonStatus.disable:
-        return XTheme.of(context).successColor3;
+        return plain ? XTheme.of(context).warningColor1 : XTheme.of(context).warningDisabledColor;
     }
   }
 
-  Color _getBgInfoStyle(BuildContext context, XButtonStatus status) {
+  Color _getBgSuccessStyle(BuildContext context, bool plain, XButtonStatus status) {
     switch (status) {
       case XButtonStatus.defaultState:
+        return plain ? XTheme.of(context).successColor3 : XTheme.of(context).successNormalColor;
+      case XButtonStatus.active:
+        return XTheme.of(context).successClickColor;
+      case XButtonStatus.disable:
+        return plain ? XTheme.of(context).successColor1 : XTheme.of(context).successDisabledColor;
+    }
+  }
+
+  Color _getBgInfoStyle(BuildContext context, bool plain, XButtonStatus status) {
+    switch (status) {
+      case XButtonStatus.defaultState:
+        return plain ? XTheme.of(context).grayColor3 : XTheme.of(context).grayColor6;
+      case XButtonStatus.active:
         return XTheme.of(context).grayColor7;
-      case XButtonStatus.active:
-        return XTheme.of(context).grayColor4;
       case XButtonStatus.disable:
-        return XTheme.of(context).grayColor3;
+        return plain ? XTheme.of(context).grayColor1 : XTheme.of(context).grayColor1;
     }
   }
 }

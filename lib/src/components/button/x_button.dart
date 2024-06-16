@@ -133,9 +133,7 @@ class _XButtonState extends State<XButton> {
     _margin = _getMargin();
     _style = _generateStyle();
     _alignment = Alignment.center;
-    if (widget.text != null) {
-      _textStyle = _getTextStyle();
-    }
+    _textStyle = _getTextStyle();
     _width = _getButtonWidth();
     _height = _getButtonHeight();
   }
@@ -178,6 +176,7 @@ class _XButtonState extends State<XButton> {
         if (widget.disabled) return;
         setState(() {
           _status = XButtonStatus.active;
+          _textStyle = _getTextStyle();
         });
       },
       onLongPressEnd: (details) {
@@ -187,6 +186,7 @@ class _XButtonState extends State<XButton> {
           if (mounted) {
             setState(() {
               _status = XButtonStatus.defaultState;
+              _textStyle = _getTextStyle();
             });
           }
         });
@@ -198,6 +198,7 @@ class _XButtonState extends State<XButton> {
 
         setState(() {
           _status = XButtonStatus.active;
+          _textStyle = _getTextStyle();
         });
       },
       onTapUp: (details) {
@@ -209,6 +210,7 @@ class _XButtonState extends State<XButton> {
           if (mounted) {
             setState(() {
               _status = XButtonStatus.defaultState;
+              _textStyle = _getTextStyle();
             });
           }
         });
@@ -271,7 +273,7 @@ class _XButtonState extends State<XButton> {
       return Icon(
         XIcon.loading,
         color: style.textColor,
-        size: 16,
+        size: _iconSize,
       );
     }
     if (widget.iconWidget != null) {
@@ -347,10 +349,17 @@ class _XButtonState extends State<XButton> {
       children.add(icon);
     }
     if (widget.text != null) {
-      children.add(Text(
-        widget.text!,
-        style: _textStyle,
-      ));
+      children.add(
+        Expanded(
+          child: Text(
+            widget.text!,
+            textAlign: TextAlign.center,
+            overflow: TextOverflow.ellipsis,
+            maxLines: 1,
+            style: _textStyle,
+          ),
+        ),
+      );
     }
 
     if (children.length == 2) {
@@ -420,14 +429,13 @@ class _XButtonState extends State<XButton> {
   }
 
   TextStyle _getTextStyle() {
-    return TextStyle(color: style.textColor, fontSize: _getFontSize());
+    return TextStyle(
+      color: _generateStyle().textColor,
+      fontSize: _getFontSize(),
+    );
   }
 
-  XButtonStyle _generateStyle() {
-    return XButtonStyle.generateStyle(context, widget.type, widget.plain, _status);
-  }
+  XButtonStyle _generateStyle() => XButtonStyle.generateStyle(context, widget.type, widget.plain, _status);
 
-  XButtonStyle _generateDefaultStyle() {
-    return XButtonStyle.generateDefaultStyle(context);
-  }
+  XButtonStyle _generateDefaultStyle() => XButtonStyle.generateDefaultStyle(context);
 }

@@ -1,7 +1,4 @@
-/// TDesign默认主题
-class XDefaultTheme {
-  static String defaultThemeConfig = '''
-  {
+{
   "default": {
     "ref": {
       "brandLightColor": "brandColor1",
@@ -363,29 +360,25 @@ class XDefaultTheme {
       "grayColor7": "#73767a",
       "brandTextColor": "#303133",
       "regularTextColor": "#606266",
-      "secondaryXTextColor": "#909399",
+      "secondaryTextColor": "#909399",
       "placeholderTextColor": "#A8ABB2",
       "disabledTextColor": "#C0C4CC",
-      "disabledBgColor": "#F5F7FA",
-      "disabledBorderColor": "#E4E7ED",
-      "disabledIconColor": "#C0C4CC",
-      "disabledTextColor2": "#909399",
-      "darkerBorder": "#CDD0D6",
-      "darkBorder": "#1F2D3D",
-      "baseBorder": "#DCDFE6",
-      "lightBorder": "#E4E7ED",
-      "lighterBorder": "#EBEEF5",
-      "darkerFill": "#E6E8EB",
-      "darkFill": "#EBEDF0",
-      "baseFill": "#F0F2F5",
-      "lightFill": "#F5F7FA",
-      "lighterFill": "#FAFAFA",
-      "blankFill": "#FFFFFF",
-      "baseBlack": "#000000",
-      "baseWhite": "#FFFFFF",
+      "darkerBorderColor": "#CDD0D6",
+      "darkBorderColor": "#1F2D3D",
+      "baseBorderColor": "#DCDFE6",
+      "lightBorderColor": "#E4E7ED",
+      "lighterBorderColor": "#EBEEF5",
+      "darkerFillColor": "#E6E8EB",
+      "darkFillColor": "#EBEDF0",
+      "baseFillColor": "#F0F2F5",
+      "lightFillColor": "#F5F7FA",
+      "lighterFillColor": "#FAFAFA",
+      "blankFillColor": "#FFFFFF",
+      "baseBlackColor": "#000000",
+      "baseWhiteColor": "#FFFFFF",
       "transparent": "transparent",
-      "pageBackground": "#F2F3F5",
-      "baseBackground": "#FFFFFF"
+      "pageBackgroundColor": "#F2F3F5",
+      "baseBackgroundColor": "#FFFFFF"
     },
     "font": {
       "fontDisplayLarge": {
@@ -595,7 +588,4 @@ class XDefaultTheme {
       "spacer160": 160
     }
   }
-}
-
-  ''';
 }

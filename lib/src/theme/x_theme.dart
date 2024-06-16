@@ -3,7 +3,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 
-import 'x_default_theme.dart';
+import '../../x_flutter.dart';
 import '../utils/colors.dart';
 
 /// 主题控件
@@ -65,7 +65,7 @@ class XTheme extends StatelessWidget {
 
 /// 主题数据
 class XThemeData extends ThemeExtension<XThemeData> {
-  static const String _defaultThemeName = 'default';
+  static const String _defaultThemeName = 'light';
   static XThemeData? _defaultThemeData;
 
   /// 名称
@@ -73,6 +73,9 @@ class XThemeData extends ThemeExtension<XThemeData> {
 
   /// 颜色
   late SplayTreeMap<String, Color> colorMap;
+
+  /// 字体尺寸
+  late SplayTreeMap<String, Font> fontMap;
 
   /// 圆角
   late SplayTreeMap<String, double> radiusMap;
@@ -100,6 +103,7 @@ class XThemeData extends ThemeExtension<XThemeData> {
     var result = XThemeData(
         name: name ?? 'default',
         colorMap: _copyMap<Color>(this.colorMap, colorMap),
+        fontMap: _copyMap<Font>(this.fontMap, fontMap),
         radiusMap: _copyMap<double>(this.radiusMap, radiusMap),
         shadowMap: _copyMap<List<BoxShadow>>(this.shadowMap, shadowMap),
         spacerMap: _copyMap<double>(spacerMap, marginMap),
@@ -110,6 +114,7 @@ class XThemeData extends ThemeExtension<XThemeData> {
   XThemeData({
     required this.name,
     required this.colorMap,
+    required this.fontMap,
     required this.radiusMap,
     required this.shadowMap,
     required this.spacerMap,
@@ -143,6 +148,7 @@ class XThemeData extends ThemeExtension<XThemeData> {
     return XThemeData(
         name: other.name,
         colorMap: other.colorMap,
+        fontMap: other.fontMap,
         radiusMap: other.radiusMap,
         shadowMap: other.shadowMap,
         spacerMap: other.spacerMap,
@@ -236,7 +242,14 @@ class XThemeData extends ThemeExtension<XThemeData> {
   static XThemeData _emptyData(String name, {XExtraThemeData? extraThemeData}) {
     var refMap = SplayTreeMap<String, String>();
     return XThemeData(
-        name: name, colorMap: SplayTreeMap(), radiusMap: SplayTreeMap(), shadowMap: SplayTreeMap(), spacerMap: SplayTreeMap(), refMap: refMap);
+      name: name,
+      colorMap: SplayTreeMap(),
+      fontMap: SplayTreeMap(),
+      radiusMap: SplayTreeMap(),
+      shadowMap: SplayTreeMap(),
+      spacerMap: SplayTreeMap(),
+      refMap: refMap,
+    );
   }
 }
 

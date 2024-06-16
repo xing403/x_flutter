@@ -7,3 +7,4 @@ export 'src/theme/x_default_theme.dart';
 export 'src/theme/x_colors.dart';
 export 'src/theme/x_theme.dart';
 export 'src/theme/x_radius.dart';
+export 'src/theme/x_fonts.dart';
