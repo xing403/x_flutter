@@ -17,7 +17,14 @@ class DemoTemplate extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Text(title ?? ''),
+        Text(
+          title ?? '',
+          textAlign: TextAlign.left,
+          style: const TextStyle(
+            fontSize: 16,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
         if (children != null) ...children! else if (child != null) child!,
       ],
     );

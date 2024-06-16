@@ -17,9 +17,9 @@ class _ButtonPageState extends State<ButtonPage> {
 
   @override
   Widget build(BuildContext context) {
-    return const Column(
-      mainAxisAlignment: MainAxisAlignment.start,
-      children: [
+    return ListView(
+      padding: const EdgeInsets.all(8),
+      children: const [
         Center(
           child: XButtonTypes(),
         ),
@@ -31,6 +31,9 @@ class _ButtonPageState extends State<ButtonPage> {
         ),
         Center(
           child: XButtonLoadingOrDisable(),
+        ),
+        Center(
+          child: XButtonLongText(),
         ),
       ],
     );

@@ -5,4 +5,5 @@ export 'button/types.dart';
 export 'button/sizes.dart';
 export 'button/shape.dart';
 export 'button/loading_disable.dart';
+export 'button/long_text.dart';
 export 'template.dart';

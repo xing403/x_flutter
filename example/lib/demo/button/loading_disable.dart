@@ -18,6 +18,11 @@ class XButtonLoadingOrDisable extends StatelessWidget {
             text: "disable",
             disabled: true,
           ),
+          XButton(
+            text: "disable",
+            disabled: true,
+            plain: true,
+          ),
         ],
       ),
     );
