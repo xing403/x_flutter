@@ -1,6 +1,5 @@
-// import 'package:x_flutter/x_flutter.dart';
-
-import '../../demo/index.dart';
+import '../index.dart';
+import '../../components/index.dart';
 
 class ButtonPage extends StatefulWidget {
   const ButtonPage({super.key});
@@ -17,9 +16,9 @@ class _ButtonPageState extends State<ButtonPage> {
 
   @override
   Widget build(BuildContext context) {
-    return ListView(
-      padding: const EdgeInsets.all(8),
-      children: const [
+    return const DemoPageTemplate(
+      title: "X Flutter button",
+      children: [
         Center(
           child: XButtonTypes(),
         ),
