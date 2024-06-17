@@ -27,13 +27,8 @@ class _DemoPageTemplateState extends State<DemoPageTemplate> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: XTheme.of(context).brandNormalColor,
-        titleTextStyle: TextStyle(
-          color: XTheme.of(context).baseWhiteColor,
-          // fontSize: XTheme.of(context).fontTitleLarge?.size,
-        ),
-        title: Text(widget.title),
+      appBar: XNavBar(
+        title: widget.title,
       ),
       body: _buildBody(context),
     );

@@ -9,4 +9,6 @@ export 'button/long_text.dart';
 
 export 'icon/icon_box.dart';
 
+export 'navbar/default.dart';
+export 'navbar/background.dart';
 export 'template.dart';

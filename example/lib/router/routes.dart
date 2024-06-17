@@ -23,7 +23,7 @@ PageBuilder _wrapInheritedTheme(WidgetBuilder builder) {
 }
 
 Map<String, List<RouteModel>> routes = {
-  "base": [
+  "基础": [
     RouteModel(
       name: 'Button 按钮',
       path: 'button',
@@ -36,6 +36,15 @@ Map<String, List<RouteModel>> routes = {
       path: 'icon',
       builder: _wrapInheritedTheme(
         (context) => const IconsPage(),
+      ),
+    ),
+  ],
+  "导航": [
+    RouteModel(
+      name: 'Navbar 导航',
+      path: 'navbar',
+      builder: _wrapInheritedTheme(
+        (context) => const NavBarPage(),
       ),
     ),
   ]
