@@ -47,5 +47,12 @@ Map<String, List<RouteModel>> routes = {
         (context) => const NavBarPage(),
       ),
     ),
+  ],
+  "扩展": [
+    RouteModel(
+      name: "滑动容器",
+      path: 'slider-container',
+      builder: _wrapInheritedTheme((context) => const SliderContainerPage()),
+    )
   ]
 };
