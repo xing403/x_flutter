@@ -1,0 +1,22 @@
+{
+  "name": "x_flutter",
+  "version": "1.0.0",
+  "description": "Flutter 组件库, 移动端开发",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/xing403/x_flutter.git"
+  },
+  "keywords": [
+    "flutter",
+    "components"
+  ],
+  "author": "xing403",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/xing403/x_flutter/issues"
+  },
+  "homepage": "https://github.com/xing403/x_flutter#readme"
+}
